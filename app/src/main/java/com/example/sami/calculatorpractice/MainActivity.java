@@ -1,5 +1,6 @@
 package com.example.sami.calculatorpractice;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Button _equalButton = (Button) findViewById(R.id.BEqual);
         Button _zeroButton = (Button) findViewById(R.id.BCE);
         Button _deleteButton = (Button) findViewById(R.id.BDel);
+        Button _percentageButton = (Button) findViewById(R.id.BPercentage);
 
         List<Button> buttonList = new ArrayList<Button>();
 
@@ -88,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        _percentageButton.setOnClickListener(
+                new Button.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent _intent = new Intent(MainActivity.this, AbirViaErActivity.class);
+                        startActivity(_intent);
+                    }
+                }
+        );
     }
 
     class customEventListener implements Button.OnClickListener {
@@ -98,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
                 mMainDisplay.setText("");
                 mIsEqualPressed = false;
             }
-            mMainDisplay.setText(mMainDisplay.getText().toString() + _clickedButton.getText().toString());
+            mMainDisplay.setText(
+                    mMainDisplay.getText().toString() + _clickedButton.getText().toString());
         }
     }
 }
