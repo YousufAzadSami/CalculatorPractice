@@ -16,6 +16,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     TextView mMainDisplay;
+    boolean mIsEqualPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMainDisplay = (TextView) findViewById(R.id.mainDisplay);
+        Button _equalButton = (Button) findViewById(R.id.BEqual);
+        Button _zeroButton = (Button) findViewById(R.id.BCE);
+        Button _deleteButton = (Button) findViewById(R.id.BDel);
+
         List<Button> buttonList = new ArrayList<Button>();
 
         // TODO faild attempt, try it later
@@ -52,21 +57,20 @@ public class MainActivity extends AppCompatActivity {
         buttonList.add((Button) findViewById(R.id.BDivide));
 
         for (Button _button : buttonList) {
-            _button.setOnClickListener(new customEventListener(mMainDisplay));
+            _button.setOnClickListener(new customEventListener());
         }
 
-        Button _equalButton = (Button) findViewById(R.id.BEqual);
         _equalButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         // do something
                         Expression _expression = new Expression(mMainDisplay.getText().toString());
                         mMainDisplay.setText(String.valueOf(_expression.calculate()));
+                        mIsEqualPressed = true;
                     }
                 }
         );
 
-        Button _zeroButton = (Button) findViewById(R.id.BCE);
         _zeroButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
@@ -75,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        Button _deleteButton = (Button) findViewById(R.id.BDel);
         _deleteButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
@@ -86,20 +89,19 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-}
 
-class customEventListener implements Button.OnClickListener {
-
-    TextView mTextView;
-
-    customEventListener(TextView inTextView) {
-        mTextView = inTextView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        Button _clickedButton = (Button) view;
-        mTextView.setText(mTextView.getText().toString() + _clickedButton.getText().toString());
+    class customEventListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Button _clickedButton = (Button) view;
+            if (mIsEqualPressed) {
+                mMainDisplay.setText("");
+                mIsEqualPressed = false;
+            }
+            mMainDisplay.setText(mMainDisplay.getText().toString() + _clickedButton.getText().toString());
+        }
     }
 }
+
+
 
