@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         buttonList.add((Button) findViewById(R.id.BMultiply));
         buttonList.add((Button) findViewById(R.id.BDivide));
 
+
         for (Button _button : buttonList) {
             _button.setOnClickListener(new customEventListener());
         }
@@ -95,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         Intent _intent = new Intent(MainActivity.this, AbirViaErActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("Mayesha", "jhogra");
+                        _intent.putExtras(bundle);
                         startActivity(_intent);
                     }
                 }
