@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,51 +18,38 @@ public class MainActivity extends AppCompatActivity {
     TextView mMainDisplay;
     boolean mIsEqualPressed = false;
 
+    Button mEqualButton;
+    Button mZeroButton;
+    Button mDeleteButton;
+    Button mPercentageButton;
+
+    List<Button> mButtonList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMainDisplay = (TextView) findViewById(R.id.mainDisplay);
-        Button _equalButton = (Button) findViewById(R.id.BEqual);
-        Button _zeroButton = (Button) findViewById(R.id.BCE);
-        Button _deleteButton = (Button) findViewById(R.id.BDel);
-        Button _percentageButton = (Button) findViewById(R.id.BPercentage);
+        mButtonList = new ArrayList<Button>();
 
-        List<Button> buttonList = new ArrayList<Button>();
-
-        // TODO faild attempt, try it later
+//        TODO failed attempt, try it later
 //        List<String> _numberButtonIdList = new ArrayList<String>();
 //        for(int i=0; i<=9; i++)
 //        {
 //            _numberButtonIdList.add("B0" + i);
 //            String _id = "R.id.B0" + i;
 //
-//            buttonList.add(findViewById(_id));
+//            mButtonList.add(findViewById(_id));
 //        }
-        buttonList.add((Button) findViewById(R.id.B00));
-        buttonList.add((Button) findViewById(R.id.B01));
-        buttonList.add((Button) findViewById(R.id.B02));
-        buttonList.add((Button) findViewById(R.id.B03));
-        buttonList.add((Button) findViewById(R.id.B04));
-        buttonList.add((Button) findViewById(R.id.B05));
-        buttonList.add((Button) findViewById(R.id.B06));
-        buttonList.add((Button) findViewById(R.id.B07));
-        buttonList.add((Button) findViewById(R.id.B08));
-        buttonList.add((Button) findViewById(R.id.B09));
-        buttonList.add((Button) findViewById(R.id.BDot));
 
-        buttonList.add((Button) findViewById(R.id.BPlus));
-        buttonList.add((Button) findViewById(R.id.BMinus));
-        buttonList.add((Button) findViewById(R.id.BMultiply));
-        buttonList.add((Button) findViewById(R.id.BDivide));
+        // initialize mButtonList
+        findGenericButtons();
+        // set click listener for generic buttons
+        setGenericButtonsClickListener();
+        // set click listener for other buttons
+        findOtherButtons();
 
-
-        for (Button _button : buttonList) {
-            _button.setOnClickListener(new customEventListener());
-        }
-
-        _equalButton.setOnClickListener(
+        mEqualButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         // do something
@@ -74,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        _zeroButton.setOnClickListener(
+        mZeroButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         mMainDisplay.setText("");
@@ -82,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        _deleteButton.setOnClickListener(
+        mDeleteButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         String _text = mMainDisplay.getText().toString();
@@ -92,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        _percentageButton.setOnClickListener(
+        mPercentageButton.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
                         Intent _intent = new Intent(MainActivity.this, AbirViaErActivity.class);
@@ -103,6 +89,39 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void findOtherButtons() {
+        mMainDisplay = (TextView) findViewById(R.id.mainDisplay);
+        mEqualButton =  (Button) findViewById(R.id.BEqual);
+        mZeroButton = (Button) findViewById(R.id.BCE);
+        mDeleteButton = (Button) findViewById(R.id.BDel);
+        mPercentageButton = (Button) findViewById(R.id.BPercentage);
+    }
+
+    private void setGenericButtonsClickListener() {
+        for (Button _button : mButtonList) {
+            _button.setOnClickListener(new customEventListener());
+        }
+    }
+
+    private void findGenericButtons() {
+        mButtonList.add((Button) findViewById(R.id.B00));
+        mButtonList.add((Button) findViewById(R.id.B01));
+        mButtonList.add((Button) findViewById(R.id.B02));
+        mButtonList.add((Button) findViewById(R.id.B03));
+        mButtonList.add((Button) findViewById(R.id.B04));
+        mButtonList.add((Button) findViewById(R.id.B05));
+        mButtonList.add((Button) findViewById(R.id.B06));
+        mButtonList.add((Button) findViewById(R.id.B07));
+        mButtonList.add((Button) findViewById(R.id.B08));
+        mButtonList.add((Button) findViewById(R.id.B09));
+        mButtonList.add((Button) findViewById(R.id.BDot));
+
+        mButtonList.add((Button) findViewById(R.id.BPlus));
+        mButtonList.add((Button) findViewById(R.id.BMinus));
+        mButtonList.add((Button) findViewById(R.id.BMultiply));
+        mButtonList.add((Button) findViewById(R.id.BDivide));
     }
 
     class customEventListener implements Button.OnClickListener {
